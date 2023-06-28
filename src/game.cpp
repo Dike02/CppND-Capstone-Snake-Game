@@ -1,6 +1,7 @@
 #include "game.h"
 #include <iostream>
 #include "SDL.h"
+#include "SDL_messagebox.h"
 
 Game::Game(std::size_t grid_width, std::size_t grid_height)
     : snake(grid_width, grid_height),
@@ -18,6 +19,7 @@ void Game::Run(Controller const &controller, Renderer &renderer,
   Uint32 frame_duration;
   int frame_count = 0;
   bool running = true;
+  PromptGameMode();  // Add this line to prompt the user for game mode
 
   while (running) {
     frame_start = SDL_GetTicks();
@@ -85,3 +87,36 @@ void Game::Update() {
 
 int Game::GetScore() const { return score; }
 int Game::GetSize() const { return snake.size; }
+
+void Game::PromptGameMode() {
+  const SDL_MessageBoxButtonData buttons[] = {
+      { /* .flags, .buttonid, .text */        0, 0, "Wall Mode" },
+      { SDL_MESSAGEBOX_BUTTON_RETURNKEY_DEFAULT, 1, "Teleportation Mode" },
+  };
+
+  const SDL_MessageBoxData messageboxdata = {
+      SDL_MESSAGEBOX_INFORMATION, /* .flags */
+      NULL, /* .window */
+      "Game Mode", /* .title */
+      "Choose a game mode:", /* .message */
+      SDL_arraysize(buttons), /* .numbuttons */
+      buttons, /* .buttons */
+      NULL /* .colorScheme */
+  };
+
+  int buttonid;
+  if (SDL_ShowMessageBox(&messageboxdata, &buttonid) < 0) {
+      SDL_Log("error displaying message box");
+      return;
+  }
+  if (buttonid == -1) {
+      SDL_Log("no selection");
+  } else {
+      if(buttonid == 0) {
+          snake.gameMode = Snake::GameMode::kWall;
+      } else if(buttonid == 1) {
+          snake.gameMode = Snake::GameMode::kTeleportation;
+      }
+  }
+}
+

@@ -39,8 +39,19 @@ void Snake::UpdateHead() {
   }
 
   // Wrap the Snake around to the beginning if going off of the screen.
-  head_x = fmod(head_x + grid_width, grid_width);
-  head_y = fmod(head_y + grid_height, grid_height);
+ // head_x = fmod(head_x + grid_width, grid_width);
+ // head_y = fmod(head_y + grid_height, grid_height);
+  if (gameMode == GameMode::kWall) {
+    // End game if snake hits the screen border
+    if (head_x < 0 || head_y < 0 || head_x >= grid_width || head_y >= grid_height) {
+      alive = false;
+    }
+  } else if (gameMode == GameMode::kTeleportation) {
+    // Wrap snake around to the opposite side of the screen
+    head_x = fmod(head_x + grid_width, grid_width);
+    head_y = fmod(head_y + grid_height, grid_height);
+  }
+
 }
 
 void Snake::UpdateBody(SDL_Point &current_head_cell, SDL_Point &prev_head_cell) {

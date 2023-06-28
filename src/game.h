@@ -18,6 +18,7 @@ class Game {
  private:
   Snake snake;
   SDL_Point food;
+  void PromptGameMode();
 
   std::random_device dev;
   std::mt19937 engine;
