@@ -6,6 +6,7 @@
 #include "controller.h"
 #include "renderer.h"
 #include "snake.h"
+#include <mutex>
 
 class Game {
  public:
@@ -19,6 +20,7 @@ class Game {
   Snake snake;
   SDL_Point food;
   void PromptGameMode();
+  std::mutex mtx;
 
   std::random_device dev;
   std::mt19937 engine;
