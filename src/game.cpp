@@ -81,9 +81,18 @@ void Game::PlaceFood() {
     y = random_h(engine);
     // Check that the location is not occupied by a snake item before placing
     // food.
-    if (!snake.SnakeCell(x, y)) {
+    /*if (!snake.SnakeCell(x, y)) {
       food.x = x;
       food.y = y;
+      return;
+    }*/
+    if (!snake.SnakeCell(x, y)) {
+      if (std::uniform_int_distribution<>(0, 4)(engine) == 0) { // 20% chanc
+        food = std::make_unique<SpeedBoostFood>(x, y);
+      } else {
+        //food = std::make_unique<Food>(x, y);
+        food = std::make_unique<SpeedBoostFood>(x, y);
+      }
       return;
     }
   }
@@ -98,12 +107,15 @@ void Game::Update() {
   int new_y = static_cast<int>(snake.head_y);
 
   // Check if there's food over here
-  if (food.x == new_x && food.y == new_y) {
+  //if (food.x == new_x && food.y == new_y) 
+  if (food->x == new_x && food->y == new_y)
+  {
     score++;
+    food->ApplyEffect(snake);   // Apply the effect of the food
     PlaceFood();
     // Grow snake and increase speed.
-    snake.GrowBody();
-    snake.speed += 0.02;
+   /* snake.GrowBody();
+    snake.speed += 0.02;*/
   }
 }
 
