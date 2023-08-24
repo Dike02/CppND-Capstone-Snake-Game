@@ -112,10 +112,11 @@ void Game::Update() {
   {
     score++;
     food->ApplyEffect(snake);   // Apply the effect of the food
-    PlaceFood();
+    //PlaceFood();
     // Grow snake and increase speed.
-   /* snake.GrowBody();
-    snake.speed += 0.02;*/
+   snake.GrowBody();
+   PlaceFood();
+    /*snake.speed += 0.02;*/
   }
 }
 
