@@ -34,6 +34,12 @@ class Game {
 
   void PlaceFood();
   void Update();
+
+  
+  Uint32 last_time{0}; // Keeps track of the last frame's time
+  float time_accumulator{0.0f};  // Accumulate time between frames
+  const float time_step = 0.02f;  // Fixed time step for game logic updates
+  
 };
 
 #endif

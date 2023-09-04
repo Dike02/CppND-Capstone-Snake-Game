@@ -17,7 +17,8 @@ public:
     SpeedBoostFood(int x, int y) : Food(x, y) {}
     
     void ApplyEffect(Snake &snake) override {
-        snake.speed += 0.05;  // Boost the snake's speed by 0.05
+        //snake.speed += 0.05;  // Boost the snake's speed by 0.05
+        snake.IncreaseSpeed(0.1f);
     }
     // Other properties and methods specific to speed boost food ...
 };

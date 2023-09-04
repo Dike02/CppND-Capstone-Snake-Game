@@ -20,6 +20,8 @@ class Snake {
         head_y(grid_height / 2) {}
 
   void Update();
+  // Function to safely increase speed 
+  void IncreaseSpeed(float increment);
 
   void GrowBody();
   bool SnakeCell(int x, int y);
@@ -37,6 +39,9 @@ class Snake {
  private:
   void UpdateHead();
   void UpdateBody(SDL_Point &current_cell, SDL_Point &prev_cell);
+
+  // Define the maximum speed constant
+  static constexpr float max_speed = 1.0f;
  
 
   bool growing{false};

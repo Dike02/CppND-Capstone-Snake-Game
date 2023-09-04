@@ -88,3 +88,11 @@ bool Snake::SnakeCell(int x, int y) {
   }
   return false;
 }
+
+// Function to safely increase the snake's speed
+void Snake::IncreaseSpeed(float increment) {
+  speed += increment;
+  if (speed > max_speed) {
+    speed = max_speed;
+  }
+}
