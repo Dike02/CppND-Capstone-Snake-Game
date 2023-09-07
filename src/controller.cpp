@@ -3,6 +3,30 @@
 #include "SDL.h"
 #include "snake.h"
 
+// Rule of Three
+Controller::Controller(const Controller& source) {
+    
+}
+
+Controller& Controller::operator=(const Controller& source) {
+    if (this == &source) return *this; 
+    return *this;
+}
+
+Controller::~Controller() {
+   
+}
+
+// Rule of Five
+Controller::Controller(Controller&& source) {
+    
+}
+
+Controller& Controller::operator=(Controller&& source) {
+    if (this == &source) return *this; 
+    return *this;
+}
+
 void Controller::ChangeDirection(Snake &snake, Snake::Direction input,
                                  Snake::Direction opposite) const {
   if (snake.direction != opposite || snake.size == 1) snake.direction = input;

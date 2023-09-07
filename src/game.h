@@ -17,9 +17,11 @@ class Game {
            std::size_t target_frame_duration);
   int GetScore() const;
   int GetSize() const;
+  ~Game();
 
  private:
   Snake snake;
+  Controller *controller;
   //SDL_Point food;
   void PromptGameMode();
   std::mutex mtx;

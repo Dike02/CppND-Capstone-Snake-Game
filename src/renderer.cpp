@@ -88,3 +88,66 @@ void Renderer::UpdateWindowTitle(int score, int fps) {
   std::string title{"Snake Score: " + std::to_string(score) + " FPS: " + std::to_string(fps)};
   SDL_SetWindowTitle(sdl_window, title.c_str());
 }
+
+
+// Copy Constructor
+// Renderer::Renderer(const Renderer &source) {
+//     // You might not want to allow copying for this class because of the SDL resources.
+//     // If so, you can leave the body of this function empty or throw an exception.
+//     throw std::runtime_error("Copy constructor for Renderer class is disabled.");
+// }
+
+Renderer::Renderer(const Renderer &source)
+    : screen_width(source.screen_width),
+      screen_height(source.screen_height),
+      grid_width(source.grid_width),
+      grid_height(source.grid_height) {
+
+    // You might not want to allow copying for this class because of the SDL resources.
+    // If so, you can leave the body of this function empty or throw an exception.
+    throw std::runtime_error("Copy constructor for Renderer class is disabled.");
+}
+
+
+// Copy Assignment Operator
+Renderer &Renderer::operator=(const Renderer &source) {
+    if (this == &source) {
+        return *this; // Return *this to deal with self-assignment
+    }
+    // Like the copy constructor, you can decide to disallow copying.
+    throw std::runtime_error("Copy assignment for Renderer class is disabled.");
+}
+
+// Move Constructor
+Renderer::Renderer(Renderer &&source) noexcept
+    : screen_width(source.screen_width),
+      screen_height(source.screen_height),
+      grid_width(source.grid_width),
+      grid_height(source.grid_height) {
+
+    sdl_window = source.sdl_window;
+    sdl_renderer = source.sdl_renderer;
+
+    source.sdl_window = nullptr;
+    source.sdl_renderer = nullptr;
+}
+
+// Move Assignment Operator
+Renderer &Renderer::operator=(Renderer &&source) noexcept {
+    if (this == &source) {
+        return *this;
+    }
+
+    SDL_DestroyRenderer(sdl_renderer);
+    SDL_DestroyWindow(sdl_window);
+
+    sdl_window = source.sdl_window;
+    sdl_renderer = source.sdl_renderer;
+
+    source.sdl_window = nullptr;
+    source.sdl_renderer = nullptr;
+
+    // No need to reassign const members in the move assignment.
+
+    return *this;
+}

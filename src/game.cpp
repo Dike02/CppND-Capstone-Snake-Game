@@ -9,7 +9,12 @@ Game::Game(std::size_t grid_width, std::size_t grid_height)
       engine(dev()),
       random_w(0, static_cast<int>(grid_width - 1)),
       random_h(0, static_cast<int>(grid_height - 1)) {
+  controller = new Controller();  // Dynamically allocate the Controller object
   PlaceFood();
+}
+
+Game::~Game() {
+    delete controller;  // Delete the dynamically allocated Controller object
 }
 
 void Game::Run(Controller const &controller, Renderer &renderer,
@@ -48,7 +53,8 @@ void Game::Run(Controller const &controller, Renderer &renderer,
   while (running) {
 
     // Input, Update, Render - the main game loop.
-    controller.HandleInput(running, snake);
+    //controller.HandleInput(running, snake);
+    this->controller->HandleInput(running, snake);  // Use the arrow operator to access the member function
     //Update();
     mtx.lock();
     renderer.Render(snake, food);
