@@ -21,7 +21,9 @@ class Game {
 
  private:
   Snake snake;
-  Controller *controller;
+  //Controller *controller;
+  std::unique_ptr<Controller> controller;
+
   //SDL_Point food;
   void PromptGameMode();
   std::mutex mtx;

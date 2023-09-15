@@ -9,12 +9,14 @@ Game::Game(std::size_t grid_width, std::size_t grid_height)
       engine(dev()),
       random_w(0, static_cast<int>(grid_width - 1)),
       random_h(0, static_cast<int>(grid_height - 1)) {
-  controller = new Controller();  // Dynamically allocate the Controller object
+  //controller = new Controller();  // Dynamically allocate the Controller object
+  controller = std::make_unique<Controller>();
+
   PlaceFood();
 }
 
 Game::~Game() {
-    delete controller;  // Delete the dynamically allocated Controller object
+   // delete controller;  // Delete the dynamically allocated Controller object
 }
 
 void Game::Run(Controller const &controller, Renderer &renderer,

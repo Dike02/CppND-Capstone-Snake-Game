@@ -7,6 +7,16 @@ add_definitions(-std=c++17)
 set(CXX_FLAGS "-Wall")
 set(CMAKE_CXX_FLAGS, "${CXX_FLAGS}")
 
+# Option to enable sanitizers
+option(USE_SANITIZER "Use sanitizer: none(default), address, undefined" "none")
+
+# Set the appropriate flags based on the chosen sanitizer option
+if(USE_SANITIZER STREQUAL "address")
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fsanitize=address -fno-omit-frame-pointer")
+elseif(USE_SANITIZER STREQUAL "undefined")
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fsanitize=undefined")
+endif()
+
 set(CMAKE_BUILD_TYPE Debug)
 
 project(SDL2Test)
